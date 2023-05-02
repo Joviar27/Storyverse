@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Storyverse</string>
+    <string name="sign_in">Entrar</string>
+    <string name="register">Registrar</string>
+    <string name="camera">Câmera</string>
+    <string name="gallery">Galeria</string>
+    <string name="submit">Enviar História</string>
+    <string name="fill_in">Preencha todo o conteúdo obrigatório</string>
+    <string name="email">E-mail</string>
+    <string name="name">Nome</string>
+    <string name="password">Senha</string>
+
+    <!-- EditText Error -->
+    <string name="pass_error">A senha deve conter pelo menos 8 caracteres.</string>
+    <string name="email_error">Formato de e-mail inválido.</string>
+
+    <!-- Empty Message -->
+    <string name="rv_empty_message">Nenhuma história encontrada, vamos criar uma!</string>
+    <string name="email_empty">E-mail deve ser preenchido</string>
+    <string name="name_empty">Nome deve ser preenchido</string>
+    <string name="pass_empty">Senha deve ser preenchida</string>
+
+    <!-- Fail Message -->
+    <string name="failed_to_register">Falha no registro: %s</string>
+    <string name="failed_to_login">Falha ao entrar: %s</string>
+    <string name="wrong_email_or_pass">E-mail ou senha incorretos</string>
+    <string name="permission_not_granted">Permissão não concedida</string>
+    <string name="check_format">Verifique o formato do e-mail e da senha</string>
+
+    <!-- Success Message -->
+    <string name="register_success">Registro realizado com sucesso</string>
+    <string name="login_success">Entrada realizada com sucesso</string>
+    <string name="logout_success">Saída realizada com sucesso</string>
+    <string name="add_story_success">História enviada com sucesso</string>
+
+    <!-- Menu -->
+    <string name="logout_menu">sair</string>
+    <string name="add_story_menu">Adicionar História</string>
+    <string name="choose_picture">Escolher uma imagem</string>
+
+</resources>

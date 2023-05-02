@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Storyverse</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="submit">Submit Story</string>
+    <string name="fill_in">Fill All Required Content</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+
+    <!-- EditText Error -->
+    <string name="pass_error">Password must contain at least 8 characters.</string>
+    <string name="email_error">Email format not valid.</string>
+
+    <!-- Empty Message -->
+    <string name="rv_empty_message">No story found, let\'s create a story!</string>
+    <string name="email_empty">Email need to be filled</string>
+    <string name="name_empty">Name need to be filled</string>
+    <string name="pass_empty">Password need to be filled</string>
+
+    <!-- Fail Message -->
+    <string name="failed_to_register">Register Failed : %s</string>
+    <string name="failed_to_login">Sign In Failed : %s</string>
+    <string name="wrong_email_or_pass">Wrong email or password</string>
+    <string name="check_format">Check Email and Password Format</string>
+    <string name="permission_not_granted">Permission not granted</string>
+
+    <!-- Success Message -->
+    <string name="register_success">Register Success</string>
+    <string name="login_success">Sign In Success</string>
+    <string name="logout_success">Logout Success</string>
+    <string name="add_story_success">Story Submitted</string>
+
+    <!-- Menu -->
+    <string name="logout_menu">logout</string>
+    <string name="add_story_menu">Add Story</string>
+    <string name="choose_picture">Choose a picture</string>
+
+    <string name="logo" translatable="false">Logo</string>
+
+</resources>

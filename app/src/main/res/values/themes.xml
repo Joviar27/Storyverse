@@ -1,0 +1,159 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Storyverse" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/rose_quartz</item>
+        <item name="colorPrimaryVariant">@color/wisteria</item>
+        <item name="colorOnPrimary">@color/baby_blue</item>
+        <item name="colorPrimaryContainer">@color/shell_pink</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/fuchsia_pink</item>
+        <item name="colorSecondaryVariant">@color/sapphire_blue</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Storyverse.NoActionBar" parent="Theme.Storyverse">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_blue_button</item>
+        <item name="android:alpha">0</item>
+    </style>
+
+    <style name="Button.SignIn" parent="Button">
+        <item name="android:text">@string/sign_in</item>
+    </style>
+
+    <style name="Button.Register" parent="Button">
+        <item name="android:text">@string/register</item>
+    </style>
+
+    <style name="Button.SetPicture" parent="Button">
+        <item name="android:background">@drawable/bg_pink_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">120dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="Button.SetPicture.Gallery" parent="Button.SetPicture">
+        <item name="android:text">@string/gallery</item>
+        <item name="android:drawableStart">@drawable/ic_outline_image_24</item>
+    </style>
+
+    <style name="Button.SetPicture.Camera" parent="Button.SetPicture">
+        <item name="android:text">@string/camera</item>
+        <item name="android:drawableStart">@drawable/ic_outline_camera_alt_24</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/bg_edit_text</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:alpha">0</item>
+    </style>
+    
+    <style name="EditText.Description" parent="EditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/bg_edit_text_squared</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:minHeight">100dp</item>
+        <item name="android:maxHeight">200dp</item>
+        <item name="android:maxLength">500</item>
+        <item name="android:maxLines">10</item>
+    </style>
+
+    <style name="EditText.Name" parent="EditText">
+        <item name="android:hint">@string/name</item>
+        <item name="android:inputType">text</item>
+        <item name="android:drawableStart">@drawable/ic_outline_person_24</item>
+    </style>
+
+    <style name="EditText.Email" parent="EditText">
+        <item name="android:hint">@string/email</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:drawableStart">@drawable/ic_outline_email_24</item>
+    </style>
+
+    <style name="EditText.Password" parent="EditText">
+        <item name="android:hint">@string/email</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:drawableStart">@drawable/ic_outline_lock_24
+        </item>
+    </style>
+
+    <style name="RedirectTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:alpha">0</item>
+    </style>
+
+    <style name="RedirectTextView.SignIn" parent="RedirectTextView">
+        <item name="android:text">@string/sign_in</item>
+    </style>
+
+    <style name="RedirectTextView.Register" parent="RedirectTextView">
+        <item name="android:text">@string/register</item>
+    </style>
+
+    <style name="RecyclerviewStory">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">?attr/colorPrimaryContainer</item>
+        <item name="android:paddingHorizontal">16dp</item>
+        <item name="android:paddingVertical">8dp</item>
+    </style>
+
+    <style name="TextviewEmptyMessage" parent="Widget.AppCompat.TextView">
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_width">256dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/rv_empty_message</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/sapphire_blue</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="ImageViewDetail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">400dp</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="TextViewDetail">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextViewDetail.Name" parent="TextViewDetail">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="TextViewDetail.Description" parent="TextViewDetail">
+        <item name="android:maxLines">15</item>
+        <item name="android:paddingVertical">16dp</item>
+        <item name="android:paddingHorizontal">32dp</item>
+        <item name="android:justificationMode">inter_word</item>
+    </style>
+</resources>

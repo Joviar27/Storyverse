@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Storyverse</string>
+    <string name="sign_in">Masuk</string>
+    <string name="register">Daftar</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="submit">Kirim Cerita</string>
+    <string name="fill_in">Isi Semua Konten yang Diperlukan</string>
+    <string name="email">Email</string>
+    <string name="name">Nama</string>
+    <string name="password">Kata Sandi</string>
+
+    <!-- EditText Error -->
+    <string name="pass_error">Kata sandi harus terdiri dari minimal 8 karakter.</string>
+    <string name="email_error">Format email tidak valid.</string>
+
+    <!-- Empty Message -->
+    <string name="rv_empty_message">Tidak ditemukan cerita, mari buat cerita!</string>
+    <string name="email_empty">Email harus diisi</string>
+    <string name="name_empty">Nama harus diisi</string>
+    <string name="pass_empty">Kata sandi harus diisi</string>
+
+    <!-- Fail Message -->
+    <string name="failed_to_register">Pendaftaran Gagal : %s</string>
+    <string name="failed_to_login">Masuk Gagal : %s</string>
+    <string name="wrong_email_or_pass">Email atau kata sandi salah</string>
+    <string name="permission_not_granted">Izin tidak diberikan</string>
+    <string name="check_format">Periksa Format Email dan Password</string>
+
+    <!-- Success Message -->
+    <string name="register_success">Pendaftaran Berhasil</string>
+    <string name="login_success">Masuk Berhasil</string>
+    <string name="logout_success">Keluar Berhasil</string>
+    <string name="add_story_success">Cerita Diunggah</string>
+
+    <!-- Menu -->
+    <string name="logout_menu">keluar</string>
+    <string name="add_story_menu">Tambah Cerita</string>
+    <string name="choose_picture">Pilih gambar</string>
+
+</resources>

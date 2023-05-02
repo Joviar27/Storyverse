@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Storyverse</string>
+    <string name="sign_in">Inloggen</string>
+    <string name="register">Registreren</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Galerij</string>
+    <string name="submit">Verhaal indienen</string>
+    <string name="fill_in">Vul alle vereiste inhoud in</string>
+    <string name="email">E-mail</string>
+    <string name="name">Naam</string>
+    <string name="password">Wachtwoord</string>
+
+    <!-- EditText Error -->
+    <string name="pass_error">Wachtwoord moet minimaal 8 tekens bevatten.</string>
+    <string name="email_error">Ongeldig e-mailformaat.</string>
+
+    <!-- Empty Message -->
+    <string name="rv_empty_message">Geen verhaal gevonden, laten we een verhaal maken!</string>
+    <string name="email_empty">E-mail moet worden ingevuld</string>
+    <string name="name_empty">Naam moet worden ingevuld</string>
+    <string name="pass_empty">Wachtwoord moet worden ingevuld</string>
+
+    <!-- Fail Message -->
+    <string name="failed_to_register">Registreren mislukt: %s</string>
+    <string name="failed_to_login">Inloggen mislukt: %s</string>
+    <string name="wrong_email_or_pass">Verkeerde e-mail of wachtwoord</string>
+    <string name="permission_not_granted">Toestemming niet verleend</string>
+    <string name="check_format">Controleer e-mail- en wachtwoordformaat</string>
+
+    <!-- Success Message -->
+    <string name="register_success">Registratie gelukt</string>
+    <string name="login_success">Inloggen gelukt</string>
+    <string name="logout_success">Uitloggen gelukt</string>
+    <string name="add_story_success">Verhaal verzonden</string>
+
+    <!-- Menu -->
+    <string name="logout_menu">uitloggen</string>
+    <string name="add_story_menu">Verhaal toevoegen</string>
+    <string name="choose_picture">Kies een foto</string>
+
+</resources>

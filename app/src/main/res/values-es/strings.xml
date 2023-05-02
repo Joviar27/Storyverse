@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Storyverse</string>
+    <string name="sign_in">Iniciar sesión</string>
+    <string name="register">Registrarse</string>
+    <string name="camera">Cámara</string>
+    <string name="gallery">Galería</string>
+    <string name="submit">Enviar historia</string>
+    <string name="fill_in">Rellenar todo el contenido requerido</string>
+    <string name="email">Correo electrónico</string>
+    <string name="name">Nombre</string>
+    <string name="password">Contraseña</string>
+
+    <!-- EditText Error -->
+    <string name="pass_error">La contraseña debe contener al menos 8 caracteres.</string>
+    <string name="email_error">Formato de correo electrónico no válido.</string>
+
+    <!-- Empty Message -->
+    <string name="rv_empty_message">No se encontró ninguna historia, ¡vamos a crear una!</string>
+    <string name="email_empty">Debe ingresar un correo electrónico</string>
+    <string name="name_empty">Debe ingresar un nombre</string>
+    <string name="pass_empty">Debe ingresar una contraseña</string>
+
+    <!-- Fail Message -->
+    <string name="failed_to_register">Error al registrarse: %s</string>
+    <string name="failed_to_login">Error al iniciar sesión: %s</string>
+    <string name="wrong_email_or_pass">Correo electrónico o contraseña incorrecta</string>
+    <string name="permission_not_granted">Permiso no otorgado</string>
+    <string name="check_format">Verifique el formato de correo electrónico y contraseña</string>
+
+    <!-- Success Message -->
+    <string name="register_success">Registro exitoso</string>
+    <string name="login_success">Inicio de sesión exitoso</string>
+    <string name="logout_success">Cierre de sesión exitoso</string>
+    <string name="add_story_success">Historia enviada</string>
+
+    <!-- Menu -->
+    <string name="logout_menu">cerrar sesión</string>
+    <string name="add_story_menu">Agregar historia</string>
+    <string name="choose_picture">Seleccionar una foto</string>
+
+</resources>
