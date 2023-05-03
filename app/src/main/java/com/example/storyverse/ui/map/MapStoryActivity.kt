@@ -1,7 +1,10 @@
 package com.example.storyverse.ui.map
 
+import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -65,6 +68,7 @@ class MapStoryActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isMyLocationButtonEnabled = true
 
         getMyLocation()
+        setMapStyle()
         getStoryList()
     }
 
@@ -127,7 +131,7 @@ class MapStoryActivity : AppCompatActivity(), OnMapReadyCallback {
             boundsBuilder.include(latLng)
 
             markerStoryMap[marker as Marker] = location.photoUri
-            added += 0.0001
+            added += 0.00001
         }
 
         mMap.setInfoWindowAdapter(InfoWindowAdapter(this@MapStoryActivity, markerStoryMap))
@@ -142,6 +146,18 @@ class MapStoryActivity : AppCompatActivity(), OnMapReadyCallback {
             )
         )
         added = 0.0
+    }
+
+    private fun setMapStyle(){
+        try{
+            val success =
+                mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
+            if(!success){
+                Log.e(ContentValues.TAG, "Style parsing error")
+            }
+        } catch (e : Resources.NotFoundException){
+            Log.e(ContentValues.TAG, "Can't find style, error : ${e.message.toString()}")
+        }
     }
 
     private fun showLoading(isLoading : Boolean){
