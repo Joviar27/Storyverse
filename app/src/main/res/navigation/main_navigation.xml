@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/splashScreenFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -17,7 +17,7 @@
             android:id="@+id/action_loginFragment_to_listStoryFragment"
             app:destination="@id/listStoryFragment"
             app:launchSingleTop="true"
-            app:popUpTo="@id/listStoryFragment"
+            app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -27,7 +27,10 @@
         tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/listStoryFragment"
@@ -41,8 +44,14 @@
             android:id="@+id/action_listStoryFragment_to_detailStoryFragment"
             app:destination="@id/detailStoryFragment" />
         <action
-            android:id="@+id/action_listStoryFragment_to_splashScreenFragment"
-            app:destination="@id/splashScreenFragment" />
+            android:id="@+id/action_listStoryFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/listStoryFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_listStoryFragment_to_mapStoryActivity"
+            app:destination="@id/mapStoryActivity" />
     </fragment>
     <fragment
         android:id="@+id/addStoryFragment"
@@ -76,19 +85,9 @@
         android:name="com.example.storyverse.ui.camera.CameraActivity"
         android:label="activity_camera"
         tools:layout="@layout/activity_camera" />
-    <fragment
-        android:id="@+id/splashScreenFragment"
-        android:name="com.example.storyverse.ui.splashscreen.SplashScreenFragment"
-        android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
-        <action
-            android:id="@+id/action_splashScreenFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_splashScreenFragment_to_listStoryFragment"
-            app:destination="@id/listStoryFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/splashScreenFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+    <activity
+        android:id="@+id/mapStoryActivity"
+        android:name="com.example.storyverse.ui.map.MapStoryActivity"
+        android:label="activity_map_story"
+        tools:layout="@layout/activity_map_story" />
 </navigation>

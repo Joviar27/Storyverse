@@ -1,19 +1,19 @@
 package com.example.storyverse.ui.liststory
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storyverse.R
 import com.example.storyverse.databinding.FragmentListStoryBinding
@@ -29,6 +29,14 @@ class ListStoryFragment : Fragment(), MenuProvider {
 
     private var _storyAdapter : StoryAdapter? = null
     private val storyAdapter get() = _storyAdapter
+
+    private var _viewModel: ListStoryViewModel? = null
+    private val viewModel get() = _viewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        obtainViewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +71,12 @@ class ListStoryFragment : Fragment(), MenuProvider {
         getStoryList()
     }
 
-    private fun obtainViewModel() : ListStoryViewModel {
+    private fun obtainViewModel() {
         val factory : ListStoryViewModelFactory = ListStoryViewModelFactory.getInstance(requireActivity())
         val viewModel : ListStoryViewModel by viewModels {
             factory
         }
-        return viewModel
+        _viewModel = viewModel
     }
 
     private fun showLoading(isLoading : Boolean){
@@ -76,9 +84,7 @@ class ListStoryFragment : Fragment(), MenuProvider {
     }
 
     private fun getStoryList(){
-        val viewModel = obtainViewModel()
-
-        viewModel.getStoryList().observe(viewLifecycleOwner){ result ->
+        viewModel?.getStoryList(0)?.observe(viewLifecycleOwner){ result ->
             when(result){
                 is ResultState.Loading -> showLoading(true)
                 is ResultState.Error ->{
@@ -91,8 +97,8 @@ class ListStoryFragment : Fragment(), MenuProvider {
                 }
                 is ResultState.Success ->{
                     showLoading(false)
-                    val data = result.data
-                    storyAdapter?.submitList(data)
+                    val stories = result.data
+                    storyAdapter?.submitList(stories)
                 }
             }
         }
@@ -109,11 +115,9 @@ class ListStoryFragment : Fragment(), MenuProvider {
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        val viewModel = obtainViewModel()
-
         when(menuItem.itemId){
             R.id.logout -> {
-                viewModel.logout().observe(viewLifecycleOwner){ result ->
+                viewModel?.logout()?.observe(viewLifecycleOwner){ result ->
                     when(result){
                         is ResultState.Loading -> showLoading(true)
                         is ResultState.Error ->{
@@ -132,7 +136,7 @@ class ListStoryFragment : Fragment(), MenuProvider {
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                            val toLogin = ListStoryFragmentDirections.actionListStoryFragmentToSplashScreenFragment()
+                            val toLogin = ListStoryFragmentDirections.actionListStoryFragmentToLoginFragment()
                             view?.findNavController()?.navigate(toLogin)
                         }
                     }
@@ -144,6 +148,10 @@ class ListStoryFragment : Fragment(), MenuProvider {
             }
             R.id.language ->{
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
+            }
+            R.id.maps->{
+                val toMaps = ListStoryFragmentDirections.actionListStoryFragmentToMapStoryActivity()
+                view?.findNavController()?.navigate(toMaps)
             }
         }
         return true

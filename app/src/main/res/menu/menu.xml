@@ -6,18 +6,24 @@
         android:id="@+id/addStory"
         android:title="@string/add_story_menu"
         android:icon="@drawable/ic_outline_add_photo_alternate_24"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/language"
-        android:title="@string/logout_menu"
+        android:title="@string/language_menu"
         android:icon="@drawable/ic_baseline_language_24"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/maps"
+        android:title="@string/map_menu"
+        android:icon="@drawable/ic_baseline_map_24"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/logout"
         android:title="@string/logout_menu"
         android:icon="@drawable/ic_baseline_logout_24"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
 </menu>

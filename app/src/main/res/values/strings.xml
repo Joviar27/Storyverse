@@ -41,4 +41,11 @@
 
     <string name="logo" translatable="false">Logo</string>
 
+    <string name="auth_error" translatable="false">Authentication Error</string>
+    <string name="login_first" translatable="false">Please Login First</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_map_story">MapStoryActivity</string>
+    <string name="language_menu">Language</string>
+    <string name="map_menu">Story Map</string>
 </resources>

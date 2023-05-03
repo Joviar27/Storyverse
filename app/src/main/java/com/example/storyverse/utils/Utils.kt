@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.location.Geocoder
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Environment
@@ -14,7 +15,11 @@ import android.util.Log
 import android.view.Surface
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyverse.R
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.io.*
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -169,4 +174,34 @@ fun byteArrayToFile (context: Context, byteArray: ByteArray) : File {
     fileOutputStream.write(byteArray)
     fileOutputStream.close()
     return context.getFileStreamPath("myFile")
+}
+
+fun getAddressName(lat: Double, lon: Double, context: Context): String? {
+    var addressName: String? = null
+    val geocoder = Geocoder(context, Locale.getDefault())
+    try {
+        val list = geocoder.getFromLocation(lat, lon, 1)
+        if (list != null && list.size != 0) {
+            addressName = list[0].getAddressLine(0)
+            Log.d(TAG, "getAddressName: $addressName")
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return addressName
+}
+
+fun urlToBitmap(urlString: String): BitmapDescriptor {
+    var bitmap: Bitmap? = null
+    try {
+        val url = URL(urlString)
+        val connection = url.openConnection() as HttpURLConnection
+        connection.doInput = true
+        connection.connect()
+        val input = connection.inputStream
+        bitmap = BitmapFactory.decodeStream(input)
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return BitmapDescriptorFactory.fromBitmap(bitmap as Bitmap)
 }

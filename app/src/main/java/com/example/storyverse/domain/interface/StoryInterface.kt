@@ -6,6 +6,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface StoryInterface {
-    suspend fun getStoryList() : ListStoryResponse
+    suspend fun getStoryList(location : Int) : ListStoryResponse
     suspend fun addStory(imageMultipart : MultipartBody.Part, description : RequestBody) : AddStoryResponse
 }

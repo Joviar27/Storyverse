@@ -10,22 +10,34 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.storyverse.R
 import com.example.storyverse.databinding.FragmentLoginBinding
 import com.example.storyverse.utils.ResultState
 import com.example.storyverse.utils.hideSystemUI
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(){
 
     private var _binding : FragmentLoginBinding? = null
     private val binding get() = _binding
 
+    private var _viewModel: LoginViewModel? = null
+    private val viewModel get() = _viewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        obtainViewModel()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        obtainViewModel()
         _binding = FragmentLoginBinding.inflate(inflater,container,false)
         return binding?.root
     }
@@ -35,7 +47,11 @@ class LoginFragment : Fragment(){
         hideSystemUI(requireActivity() as AppCompatActivity)
         playAnimation()
         setupView()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        checkAuthState()
     }
 
     private fun setupView(){
@@ -51,12 +67,12 @@ class LoginFragment : Fragment(){
         }
     }
 
-    private fun obtainViewModel() : LoginViewModel {
+    private fun obtainViewModel(){
         val factory : LoginViewModelFactory = LoginViewModelFactory.getInstance(requireActivity())
         val viewModel : LoginViewModel by viewModels {
             factory
         }
-        return viewModel
+        _viewModel = viewModel
     }
 
     private fun showLoading(isLoading : Boolean){
@@ -88,12 +104,11 @@ class LoginFragment : Fragment(){
     }
 
     private fun signInUser(email : String, password : String){
-        val viewModel = obtainViewModel()
         when {
             email.isEmpty() -> binding?.edLoginEmail?.error = resources.getString(R.string.email_empty)
             password.isEmpty() -> binding?.edLoginPassword?.error = resources.getString(R.string.pass_empty)
             else -> {
-                viewModel.login(email, password).observe(viewLifecycleOwner) { result ->
+                viewModel?.login(email, password)?.observe(viewLifecycleOwner) { result ->
                     when (result) {
                         is ResultState.Loading -> showLoading(true)
                         is ResultState.Error -> {
@@ -125,6 +140,39 @@ class LoginFragment : Fragment(){
                             view?.findNavController()?.navigate(toListStory)
                             showLoading(false)
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun checkAuthState(){
+        viewModel?.checkAuthState()?.observe(viewLifecycleOwner){ result->
+            when(result){
+                is ResultState.Loading ->{
+                    lifecycleScope.launch {
+                        delay(3000)
+                    }
+                }
+                is ResultState.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.auth_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.e(TAG, "check auth state : ${result.error}")
+                }
+                is ResultState.Success ->{
+                    if(result.data?.state!!){
+                        val toListStory = LoginFragmentDirections.actionLoginFragmentToListStoryFragment()
+                        view?.findNavController()?.navigate(toListStory)
+                    }
+                    else{
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.login_first),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

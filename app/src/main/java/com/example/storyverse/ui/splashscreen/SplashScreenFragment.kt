@@ -35,7 +35,7 @@ class SplashScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (requireActivity() as AppCompatActivity).supportActionBar?.hide()
-        checkAuthState()
+        //checkAuthState()
     }
 
     private fun obtainViewModel() : SplashViewModel {
@@ -46,31 +46,31 @@ class SplashScreenFragment : Fragment() {
         return viewModel
     }
 
-    private fun checkAuthState(){
-        val viewModel = obtainViewModel()
-        viewModel.checkAuthState().observe(viewLifecycleOwner){ result->
-            when(result){
-                is ResultState.Loading ->{
-                    lifecycleScope.launch {
-                        delay(3000)
-                    }
-                }
-                is ResultState.Error -> {
-                    val toLogin = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
-                    view?.findNavController()?.navigate(toLogin)
-                    Log.e(TAG, "check auth state : ${result.error}")
-                }
-                is ResultState.Success ->{
-                    if(result.data?.state!!){
-                        val toListStory = SplashScreenFragmentDirections.actionSplashScreenFragmentToListStoryFragment()
-                        view?.findNavController()?.navigate(toListStory)
-                    }
-                    else{
-                        val toLogin = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
-                        view?.findNavController()?.navigate(toLogin)
-                    }
-                }
-            }
-        }
-    }
+//    private fun checkAuthState(){
+//        val viewModel = obtainViewModel()
+//        viewModel.checkAuthState().observe(viewLifecycleOwner){ result->
+//            when(result){
+//                is ResultState.Loading ->{
+//                    lifecycleScope.launch {
+//                        delay(3000)
+//                    }
+//                }
+//                is ResultState.Error -> {
+//                    val toLogin = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
+//                    view?.findNavController()?.navigate(toLogin)
+//                    Log.e(TAG, "check auth state : ${result.error}")
+//                }
+//                is ResultState.Success ->{
+//                    if(result.data?.state!!){
+//                        val toListStory = SplashScreenFragmentDirections.actionSplashScreenFragmentToListStoryFragment()
+//                        view?.findNavController()?.navigate(toListStory)
+//                    }
+//                    else{
+//                        val toLogin = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
+//                        view?.findNavController()?.navigate(toLogin)
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

@@ -10,9 +10,9 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class StoryRepository(private val apiService: ApiService) : StoryInterface {
-    override suspend fun getStoryList(): ListStoryResponse {
+    override suspend fun getStoryList(location : Int): ListStoryResponse {
         return withContext(Dispatchers.IO) {
-            apiService.getStoryList()
+            apiService.getStoryList(location)
         }
     }
 

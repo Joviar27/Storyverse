@@ -8,6 +8,6 @@ class ListStoryViewModel(
     private val getStoryListUseCase: GetStoryListUseCase,
     private val logoutUseCase: LogoutUseCase
     ) : ViewModel() {
-    fun getStoryList() = getStoryListUseCase.execute()
+    fun getStoryList(location : Int) = getStoryListUseCase.execute(location)
     fun logout() = logoutUseCase.execute()
 }
