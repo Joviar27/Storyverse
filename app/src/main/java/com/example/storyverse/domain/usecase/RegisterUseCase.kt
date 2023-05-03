@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.example.storyverse.data.remote.response.RegisterResponse
+import com.example.storyverse.data.repository.AuthRepository
 import com.example.storyverse.domain.`interface`.AuthInterface
 import com.example.storyverse.utils.ResultState
 
-class RegisterUseCase(private val authRepository: AuthInterface) {
+class RegisterUseCase(private val authRepository: AuthRepository) {
     fun execute(
         name: String,
         email: String,

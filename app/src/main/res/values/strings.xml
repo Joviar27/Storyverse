@@ -48,4 +48,5 @@
     <string name="title_activity_map_story">MapStoryActivity</string>
     <string name="language_menu">Language</string>
     <string name="map_menu">Story Map</string>
+    <string name="btn_retry">retry</string>
 </resources>

@@ -74,11 +74,11 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 
     //Ktx
-    implementation "androidx.activity:activity-ktx:1.6.1"
+    implementation 'androidx.activity:activity-ktx:1.7.1'
 
     //coroutine support
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0" //liveData
-    implementation "androidx.room:room-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1" //liveData
+    implementation 'androidx.room:room-ktx:2.6.0-alpha01'
 
     //Datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
@@ -90,5 +90,12 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
     implementation "androidx.camera:camera-view:${camerax_version}"
 
+    //room
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
     implementation "androidx.room:room-runtime:2.6.0-alpha01"
+    kapt 'androidx.room:room-compiler:2.6.0-alpha01'
+
+    //Paging
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+    implementation 'androidx.room:room-paging:2.6.0-alpha01'
 }

@@ -3,6 +3,8 @@ package com.example.storyverse.domain.usecase
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import androidx.paging.*
+import com.example.storyverse.data.StoryRemoteMediator
 import com.example.storyverse.data.repository.StoryRepository
 import com.example.storyverse.domain.entity.StoryEntity
 import com.example.storyverse.utils.ResultState
@@ -10,7 +12,7 @@ import com.example.storyverse.utils.ResultState
 class GetStoryListUseCase(
     private val storyRepository: StoryRepository,
 ) {
-    fun execute(location : Int) : LiveData<ResultState<List<StoryEntity>>> = liveData{
+    fun getStoryList(location : Int) : LiveData<ResultState<List<StoryEntity>>> = liveData{
         emit(ResultState.Loading)
         try{
             val responseStory = storyRepository.getStoryList(location)
@@ -31,5 +33,16 @@ class GetStoryListUseCase(
         catch (e : Exception){
             emit(ResultState.Error(e.message.toString()))
         }
+    }
+
+    fun getStoryPaged() : LiveData<PagingData<StoryEntity>>{
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = storyRepository.getPagingConfig(),
+            remoteMediator = storyRepository.getRemoteMediator(),
+            pagingSourceFactory = {
+                storyRepository.getPagingSourceFactory()
+            }
+        ).liveData
     }
 }

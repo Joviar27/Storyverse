@@ -3,6 +3,7 @@ package com.example.storyverse.utils
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ import com.example.storyverse.domain.entity.StoryEntity
 
 class StoryAdapter (
     private val onItemClickedListener : OnItemClicked,
-): ListAdapter<StoryEntity, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK){
+): PagingDataAdapter<StoryEntity, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK){
 
     inner class StoryViewHolder(private var binding: ViewholderStoryBinding) : RecyclerView.ViewHolder (binding.root){
         fun bind(story : StoryEntity){
@@ -43,7 +44,9 @@ class StoryAdapter (
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val user = getItem(position)
-        holder.bind(user)
+        if(user!=null){
+            holder.bind(user)
+        }
     }
 
     companion object {

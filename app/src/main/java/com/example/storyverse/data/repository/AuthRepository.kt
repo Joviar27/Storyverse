@@ -7,14 +7,14 @@ import com.example.storyverse.domain.`interface`.AuthInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AuthRepository(private val apiService: ApiService) : AuthInterface {
-    override suspend fun register(name: String, email: String, password: String): RegisterResponse {
+class AuthRepository(private val apiService: ApiService){
+      suspend fun register(name: String, email: String, password: String): RegisterResponse {
         return withContext(Dispatchers.IO) {
             apiService.register(name, email, password)
         }
     }
 
-    override suspend fun login(email: String, password: String): LoginResponse {
+     suspend fun login(email: String, password: String): LoginResponse {
         return withContext(Dispatchers.IO) {
             apiService.login(email, password)
         }

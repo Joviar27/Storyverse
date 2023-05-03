@@ -10,12 +10,12 @@ import com.example.storyverse.domain.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UserPreference(private val dataStore: DataStore<Preferences>) : UserPreferenceInterface{
+class UserPreference(private val dataStore: DataStore<Preferences>){
 
     private val AUTH_TOKEN_KEY = stringPreferencesKey("auth_token")
     private val AUTH_STATE_KEY = booleanPreferencesKey("auth_state")
 
-    override val userAuthFlow: Flow<UserEntity> = dataStore.data
+     val userAuthFlow: Flow<UserEntity> = dataStore.data
         .map { preference ->
             UserEntity(
                 preference[AUTH_STATE_KEY] ?: false,
@@ -23,14 +23,14 @@ class UserPreference(private val dataStore: DataStore<Preferences>) : UserPrefer
             )
         }
 
-    override suspend fun setUserAuth(userEntity: UserEntity) {
+     suspend fun setUserAuth(userEntity: UserEntity) {
         dataStore.edit {
             it[AUTH_STATE_KEY] = userEntity.state
             it[AUTH_TOKEN_KEY] = userEntity.token
         }
     }
 
-    override suspend fun clearUserAuth() {
+     suspend fun clearUserAuth() {
         dataStore.edit {
             it.clear()
         }

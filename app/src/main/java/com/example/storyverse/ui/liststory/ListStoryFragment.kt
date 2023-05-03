@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.storyverse.R
 import com.example.storyverse.databinding.FragmentListStoryBinding
 import com.example.storyverse.domain.entity.StoryEntity
+import com.example.storyverse.utils.LoadingStateAdapter
 import com.example.storyverse.utils.ResultState
 import com.example.storyverse.utils.StoryAdapter
 import com.example.storyverse.utils.showSystemUI
@@ -68,7 +69,7 @@ class ListStoryFragment : Fragment(), MenuProvider {
             }
         })
 
-        getStoryList()
+        getStoryPaged()
     }
 
     private fun obtainViewModel() {
@@ -83,30 +84,46 @@ class ListStoryFragment : Fragment(), MenuProvider {
         binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun getStoryList(){
-        viewModel?.getStoryList(0)?.observe(viewLifecycleOwner){ result ->
-            when(result){
-                is ResultState.Loading -> showLoading(true)
-                is ResultState.Error ->{
-                    showLoading(false)
-                    Toast.makeText(
-                        context,
-                        result.error,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                is ResultState.Success ->{
-                    showLoading(false)
-                    val stories = result.data
-                    storyAdapter?.submitList(stories)
-                }
-            }
+//    private fun getStoryList(){
+//        viewModel?.getStoryList(0)?.observe(viewLifecycleOwner){ result ->
+//            when(result){
+//                is ResultState.Loading -> showLoading(true)
+//                is ResultState.Error ->{
+//                    showLoading(false)
+//                    Toast.makeText(
+//                        context,
+//                        result.error,
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//                is ResultState.Success ->{
+//                    showLoading(false)
+//                    val stories = result.data
+//                    storyAdapter?.submitList(stories)
+//                }
+//            }
+//        }
+//
+//        binding?.rvStory?.apply {
+//            layoutManager = LinearLayoutManager(requireActivity())
+//            setHasFixedSize(true)
+//            adapter = storyAdapter
+//        }
+//    }
+
+    private fun getStoryPaged(){
+        viewModel?.story?.observe(viewLifecycleOwner){
+            storyAdapter?.submitData(lifecycle, it) //used to insert data into PagingDataAdapter
         }
 
         binding?.rvStory?.apply {
             layoutManager = LinearLayoutManager(requireActivity())
             setHasFixedSize(true)
-            adapter = storyAdapter
+            adapter = storyAdapter?.withLoadStateFooter(
+                footer = LoadingStateAdapter{
+                    storyAdapter?.retry()
+                }
+            )
         }
     }
 

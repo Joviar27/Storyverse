@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.storyverse.data.remote.retofit.ApiConfig
 import com.example.storyverse.data.repository.AuthRepository
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.storyverse.data.local.StoryDatabase
 import com.example.storyverse.data.local.UserPreference
 import com.example.storyverse.data.repository.StoryRepository
 import com.example.storyverse.domain.usecase.*
@@ -20,8 +21,9 @@ object Injection {
 
     private fun provideStoryRepository(context: Context) : StoryRepository{
         val dataStore = context.dataStore
+        val storyDatabase = StoryDatabase.getDatabase(context)
         val apiService = ApiConfig.getApiService(dataStore)
-        return StoryRepository.getInstance(apiService)
+        return StoryRepository.getInstance(apiService, storyDatabase)
     }
 
     private fun provideUserPreference(context: Context) : UserPreference{
