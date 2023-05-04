@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -17,8 +18,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
-import androidx.fragment.app.Fragment
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
@@ -26,6 +27,9 @@ import com.example.storyverse.R
 import com.example.storyverse.databinding.FragmentAddStoryBinding
 import com.example.storyverse.ui.camera.CameraActivity
 import com.example.storyverse.utils.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -33,12 +37,21 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
+
 class AddStoryFragment : Fragment(), MenuProvider {
 
     private var _binding : FragmentAddStoryBinding? = null
     private val binding get() = _binding
 
     private var file : File? = null
+
+    private var _viewModel: AddStoryViewModel? = null
+    private val viewModel get() = _viewModel
+
+    private lateinit var fusedLocationClient : FusedLocationProviderClient
+
+    private var latLng: LatLng? = null
+    private var switchState : Boolean = false
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -49,6 +62,22 @@ class AddStoryFragment : Fragment(), MenuProvider {
                 resources.getString(R.string.permission_not_granted),
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private val requestLocationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permission ->
+        when{
+            permission[Manifest.permission.ACCESS_FINE_LOCATION] ?: false ->{
+                this.getMyLastLocation()
+            }
+            permission[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false ->{
+                this.getMyLastLocation()
+            }
+            else ->{
+                Toast.makeText(requireActivity(), "Access to location not granted", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -96,6 +125,11 @@ class AddStoryFragment : Fragment(), MenuProvider {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        obtainViewModel()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -133,6 +167,8 @@ class AddStoryFragment : Fragment(), MenuProvider {
         playAnimation()
         setButtonEnabled()
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
         binding?.edAddDescription?.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 //nothing
@@ -145,7 +181,6 @@ class AddStoryFragment : Fragment(), MenuProvider {
             override fun afterTextChanged(s: Editable?) {
                 //nothing
             }
-
         })
 
         binding?.buttonCamera?.setOnClickListener {
@@ -159,7 +194,23 @@ class AddStoryFragment : Fragment(), MenuProvider {
         binding?.buttonAdd?.setOnClickListener {
             showLoading(true)
             disableButton()
-            uploadImage()
+            uploadImage(latLng?.latitude, latLng?.longitude)
+        }
+
+        binding?.switchLocation?.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                getMyLastLocation()
+                buttonView.isChecked = switchState
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            setDisplayShowHomeEnabled(false)
+            setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         }
     }
 
@@ -184,8 +235,7 @@ class AddStoryFragment : Fragment(), MenuProvider {
         launcherIntentGallery.launch(chooserIntent)
     }
 
-    private fun uploadImage() {
-        val viewModel = obtainViewModel()
+    private fun uploadImage(lat : Double? = null, lon : Double? = null) {
         val description = binding?.edAddDescription?.text.toString()
 
         if(file != null){
@@ -201,40 +251,72 @@ class AddStoryFragment : Fragment(), MenuProvider {
                 requestImageFile
             )
 
-            viewModel.addStory(imageMultipart, descriptionBody).observe(viewLifecycleOwner){ result ->
-                when(result){
-                    is ResultState.Loading -> {
-                        showLoading(true)
+            if(lat!=null && lon!=null){
+                val latBody = lat.toFloat().toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                val lonBody = lon.toFloat().toString().toRequestBody("text/plain".toMediaTypeOrNull())
+
+                viewModel?.addStoryWithLocation(imageMultipart, descriptionBody, latBody, lonBody)?.observe(viewLifecycleOwner){ result ->
+                    when(result){
+                        is ResultState.Loading -> {
+                            showLoading(true)
+                        }
+                        is ResultState.Error ->{
+                            showLoading(false)
+                            Toast.makeText(
+                                requireActivity(),
+                                result.error,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is ResultState.Success ->{
+                            showLoading(false)
+                            Toast.makeText(
+                                requireActivity(),
+                                resources.getString(R.string.add_story_success),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val back = AddStoryFragmentDirections.actionAddStoryFragmentToListStoryFragment2()
+                            view?.findNavController()?.navigate(back)
+                        }
                     }
-                    is ResultState.Error ->{
-                        showLoading(false)
-                        Toast.makeText(
-                            requireActivity(),
-                            result.error,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    is ResultState.Success ->{
-                        showLoading(false)
-                        Toast.makeText(
-                            requireActivity(),
-                            resources.getString(R.string.add_story_success),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val back = AddStoryFragmentDirections.actionAddStoryFragmentToListStoryFragment2()
-                        view?.findNavController()?.navigate(back)
+                }
+            }
+            else{
+                viewModel?.addStoryWithoutLocation(imageMultipart, descriptionBody)?.observe(viewLifecycleOwner){ result ->
+                    when(result){
+                        is ResultState.Loading -> {
+                            showLoading(true)
+                        }
+                        is ResultState.Error ->{
+                            showLoading(false)
+                            Toast.makeText(
+                                requireActivity(),
+                                result.error,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        is ResultState.Success ->{
+                            showLoading(false)
+                            Toast.makeText(
+                                requireActivity(),
+                                resources.getString(R.string.add_story_success),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val back = AddStoryFragmentDirections.actionAddStoryFragmentToListStoryFragment2()
+                            view?.findNavController()?.navigate(back)
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun obtainViewModel() : AddStoryViewModel {
+    private fun obtainViewModel() {
         val factory : AddStoryViewModelFactory = AddStoryViewModelFactory.getInstance(requireActivity())
         val viewModel : AddStoryViewModel by viewModels {
             factory
         }
-        return viewModel
+        _viewModel = viewModel
     }
 
     private fun showLoading(isLoading : Boolean){
@@ -258,6 +340,8 @@ class AddStoryFragment : Fragment(), MenuProvider {
 
         val desc = ObjectAnimator.ofFloat(binding?.edAddDescription, View.ALPHA,1f).setDuration(500)
 
+        val switch = ObjectAnimator.ofFloat(binding?.switchLocation, View.ALPHA,1f).setDuration(500)
+
         val btnAdd = ObjectAnimator.ofFloat(binding?.buttonAdd, View.ALPHA,1f).setDuration(500)
 
         val together = AnimatorSet().apply {
@@ -265,7 +349,7 @@ class AddStoryFragment : Fragment(), MenuProvider {
         }
 
         AnimatorSet().apply {
-            playSequentially(together,desc,btnAdd)
+            playSequentially(together,desc,switch, btnAdd)
             start()
         }
     }
@@ -281,6 +365,42 @@ class AddStoryFragment : Fragment(), MenuProvider {
             }
         }
         return true
+    }
+
+    private fun checkPermission(permission: String) : Boolean{
+        return ContextCompat.checkSelfPermission(
+            requireActivity(),
+            permission
+        )==PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getMyLastLocation(){
+        if(checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            && checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ){
+            fusedLocationClient.lastLocation.addOnSuccessListener { location : Location ->
+                if(location!=null){
+                    latLng = LatLng(location.latitude, location.longitude)
+                    switchState = true
+                }
+                else{
+                    Toast.makeText(
+                        requireActivity(),
+                        "Location is not found. Try Again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    switchState = false
+                }
+            }
+        }
+        else{
+            requestLocationPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

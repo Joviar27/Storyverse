@@ -10,18 +10,35 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class AddStoryUseCase(private val storyRepository: StoryRepository) {
-    fun execute(
+    fun addStoryWithoutLocation(
         imageMultipart : MultipartBody.Part,
         description : RequestBody
     ) : LiveData<ResultState<AddStoryResponse>> = liveData {
         emit(ResultState.Loading)
         try{
-            val response = storyRepository.addStory(imageMultipart, description)
+            val response = storyRepository.addStoryWithoutLocation(imageMultipart, description)
             val remoteResponse = MutableLiveData<ResultState<AddStoryResponse>>()
             remoteResponse.value = ResultState.Success(response)
             emitSource(remoteResponse)
         }
         catch (e : Exception){
+            emit(ResultState.Error(e.message.toString()))
+        }
+    }
+
+    fun addStoryWithLocation(
+        imageMultipart : MultipartBody.Part,
+        description : RequestBody,
+        lat : RequestBody,
+        lon : RequestBody
+    ) : LiveData<ResultState<AddStoryResponse>> = liveData {
+        emit(ResultState.Loading)
+        try {
+            val response = storyRepository.addStoryWithLocation(imageMultipart, description, lat, lon)
+            val remoteResponse = MutableLiveData<ResultState<AddStoryResponse>>()
+            remoteResponse.value = ResultState.Success(response)
+            emitSource(remoteResponse)
+        } catch (e: Exception) {
             emit(ResultState.Error(e.message.toString()))
         }
     }

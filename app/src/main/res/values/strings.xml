@@ -49,4 +49,5 @@
     <string name="language_menu">Language</string>
     <string name="map_menu">Story Map</string>
     <string name="btn_retry">retry</string>
+    <string name="switch_location">Show Location</string>
 </resources>

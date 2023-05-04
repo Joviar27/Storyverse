@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.addstory.AddStoryFragment"
-    android:padding="32dp"
+    android:paddingHorizontal="32dp"
+    android:paddingVertical="8dp"
     android:background="?attr/colorPrimaryContainer">
 
     <ImageView
@@ -47,7 +48,7 @@
     <EditText
         android:id="@+id/ed_add_description"
         style="@style/EditText.Description"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +61,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
+        app:layout_constraintTop_toBottomOf="@+id/switch_location" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -69,4 +70,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/switch_location"
+        android:textColor="?attr/colorSecondaryVariant"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:alpha="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>

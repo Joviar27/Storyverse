@@ -7,5 +7,7 @@ import okhttp3.RequestBody
 
 class AddStoryViewModel(private val addStoryUseCase: AddStoryUseCase) : ViewModel(){
 
-    fun addStory(imageMultipart : MultipartBody.Part, description : RequestBody)= addStoryUseCase.execute(imageMultipart, description)
+    fun addStoryWithoutLocation(imageMultipart : MultipartBody.Part, description : RequestBody)= addStoryUseCase.addStoryWithoutLocation(imageMultipart, description)
+    fun addStoryWithLocation(imageMultipart : MultipartBody.Part, description : RequestBody, lat : RequestBody, lon : RequestBody)=
+        addStoryUseCase.addStoryWithLocation(imageMultipart, description, lat, lon)
 }
