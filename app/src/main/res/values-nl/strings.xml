@@ -39,4 +39,12 @@
     <string name="add_story_menu">Verhaal toevoegen</string>
     <string name="choose_picture">Kies een foto</string>
 
+    <string name="logo">Logo</string>
+    <string name="auth_error" >Verificatiefout</string>
+    <string name="login_first" >Gelieve eerst in te loggen</string>
+    <string name="language_menu">Taal</string>
+    <string name="map_menu">Verhalenkaart</string>
+    <string name="btn_retry">Opnieuw proberen</string>
+    <string name="switch_location">Locatie weergeven</string>
+
 </resources>

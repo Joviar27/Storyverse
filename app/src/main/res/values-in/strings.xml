@@ -39,4 +39,12 @@
     <string name="add_story_menu">Tambah Cerita</string>
     <string name="choose_picture">Pilih gambar</string>
 
+    <string name="logo">Logo</string>
+    <string name="auth_error">Kesalahan Autentikasi</string>
+    <string name="login_first">Harap Login Terlebih Dahulu</string>
+    <string name="language_menu">Bahasa</string>
+    <string name="map_menu">Peta Cerita</string>
+    <string name="btn_retry">Coba Lagi</string>
+    <string name="switch_location">Tampilkan Lokasi</string>
+
 </resources>

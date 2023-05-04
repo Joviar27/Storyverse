@@ -39,4 +39,12 @@
     <string name="add_story_menu">Adicionar História</string>
     <string name="choose_picture">Escolher uma imagem</string>
 
+    <string name="logo">Logotipo</string>
+    <string name="auth_error">Erro de Autenticação</string>
+    <string name="login_first">Por favor, faça login primeiro</string>
+    <string name="language_menu">Idioma</string>
+    <string name="map_menu">Mapa da História</string>
+    <string name="btn_retry">Tentar Novamente</string>
+    <string name="switch_location">Mostrar Localização</string>
+
 </resources>
