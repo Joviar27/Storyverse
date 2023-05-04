@@ -15,6 +15,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
+
+    var BASE_URL : String = "https://story-api.dicoding.dev/v1/"
+
     fun getApiService(dataStore: DataStore<Preferences>) : ApiService {
 
         val pref = UserPreference.getInstance(dataStore)
@@ -42,7 +45,7 @@ object ApiConfig {
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://story-api.dicoding.dev/v1/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

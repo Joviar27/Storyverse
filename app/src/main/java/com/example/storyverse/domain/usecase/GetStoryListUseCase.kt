@@ -8,6 +8,7 @@ import com.example.storyverse.data.StoryRemoteMediator
 import com.example.storyverse.data.repository.StoryRepository
 import com.example.storyverse.domain.entity.StoryEntity
 import com.example.storyverse.utils.ResultState
+import com.example.storyverse.utils.wrapEspressoIdlingResource
 
 class GetStoryListUseCase(
     private val storyRepository: StoryRepository,
@@ -37,12 +38,14 @@ class GetStoryListUseCase(
 
     fun getStoryPaged() : LiveData<PagingData<StoryEntity>>{
         @OptIn(ExperimentalPagingApi::class)
-        return Pager(
-            config = storyRepository.getPagingConfig(),
-            remoteMediator = storyRepository.getRemoteMediator(),
-            pagingSourceFactory = {
-                storyRepository.getPagingSourceFactory()
-            }
-        ).liveData
+        wrapEspressoIdlingResource {
+            return Pager(
+                config = storyRepository.getPagingConfig(),
+                remoteMediator = storyRepository.getRemoteMediator(),
+                pagingSourceFactory = {
+                    storyRepository.getPagingSourceFactory()
+                }
+            ).liveData
+        }
     }
 }

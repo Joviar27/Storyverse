@@ -48,6 +48,15 @@ class DetailStoryFragment : Fragment(), MenuProvider {
 
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (requireActivity() as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            setDisplayShowHomeEnabled(false)
+            setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
+        }
+    }
+
     private fun setupView(story : StoryEntity){
         binding?.tvDetailName?.text = story.name
         binding?.tvDetailDescription?.text = story.description

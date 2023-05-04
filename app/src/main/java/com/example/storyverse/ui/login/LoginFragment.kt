@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +14,6 @@ import androidx.navigation.findNavController
 import com.example.storyverse.R
 import com.example.storyverse.databinding.FragmentLoginBinding
 import com.example.storyverse.utils.ResultState
-import com.example.storyverse.utils.hideSystemUI
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -44,7 +42,6 @@ class LoginFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hideSystemUI(requireActivity() as AppCompatActivity)
         playAnimation()
         setupView()
     }

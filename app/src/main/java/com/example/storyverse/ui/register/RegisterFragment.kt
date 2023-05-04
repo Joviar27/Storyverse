@@ -34,7 +34,7 @@ class RegisterFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        hideSystemUI(requireActivity() as AppCompatActivity)
+//        hideSystemUI(requireActivity() as AppCompatActivity)
         playAnimation()
         setupView()
     }

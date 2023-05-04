@@ -7,7 +7,6 @@ import com.example.storyverse.data.local.StoryDatabase
 import com.example.storyverse.data.remote.response.AddStoryResponse
 import com.example.storyverse.data.remote.response.ListStoryResponse
 import com.example.storyverse.data.remote.retofit.ApiService
-import com.example.storyverse.domain.`interface`.StoryInterface
 import com.example.storyverse.domain.entity.StoryEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,12 +39,23 @@ class StoryRepository(
         return storyDatabase.storyDao().getAllStory()
     }
 
-    suspend fun addStory(
+    suspend fun addStoryWithoutLocation(
         imageMultipart: MultipartBody.Part,
         description: RequestBody
     ): AddStoryResponse {
         return withContext(Dispatchers.IO) {
             apiService.addStory(imageMultipart, description)
+        }
+    }
+
+    suspend fun addStoryWithLocation(
+        imageMultipart: MultipartBody.Part,
+        description: RequestBody,
+        lat : RequestBody,
+        lon : RequestBody
+    ): AddStoryResponse {
+        return withContext(Dispatchers.IO) {
+            apiService.addStory(imageMultipart, description, lat, lon)
         }
     }
 
