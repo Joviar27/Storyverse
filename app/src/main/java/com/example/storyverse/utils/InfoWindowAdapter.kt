@@ -1,8 +1,6 @@
 package com.example.storyverse.utils
 
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView

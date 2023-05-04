@@ -6,7 +6,6 @@ import androidx.lifecycle.liveData
 import com.example.storyverse.data.local.UserPreference
 import com.example.storyverse.data.remote.response.LoginResponse
 import com.example.storyverse.data.repository.AuthRepository
-import com.example.storyverse.domain.`interface`.AuthInterface
 import com.example.storyverse.domain.entity.UserEntity
 import com.example.storyverse.utils.ResultState
 

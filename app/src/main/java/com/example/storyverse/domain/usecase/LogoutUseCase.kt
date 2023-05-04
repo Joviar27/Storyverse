@@ -3,7 +3,6 @@ package com.example.storyverse.domain.usecase
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
-import com.example.storyverse.R
 import com.example.storyverse.data.local.UserPreference
 import com.example.storyverse.utils.ResultState
 

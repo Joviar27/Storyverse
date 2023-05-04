@@ -3,7 +3,6 @@ package com.example.storyverse.data.repository
 import com.example.storyverse.data.remote.response.LoginResponse
 import com.example.storyverse.data.remote.response.RegisterResponse
 import com.example.storyverse.data.remote.retofit.ApiService
-import com.example.storyverse.domain.`interface`.AuthInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

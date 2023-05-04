@@ -1,7 +1,6 @@
 package com.example.storyverse.ui.login
 
 import androidx.lifecycle.ViewModel
-import com.example.storyverse.data.local.UserPreference
 import com.example.storyverse.domain.usecase.CheckAuthStateUseCase
 import com.example.storyverse.domain.usecase.LoginUseCase
 

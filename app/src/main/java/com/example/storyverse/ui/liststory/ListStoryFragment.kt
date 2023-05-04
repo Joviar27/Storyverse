@@ -1,13 +1,10 @@
 package com.example.storyverse.ui.liststory
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -21,7 +18,6 @@ import com.example.storyverse.domain.entity.StoryEntity
 import com.example.storyverse.utils.LoadingStateAdapter
 import com.example.storyverse.utils.ResultState
 import com.example.storyverse.utils.StoryAdapter
-import com.example.storyverse.utils.showSystemUI
 
 class ListStoryFragment : Fragment(), MenuProvider {
 
@@ -54,13 +50,6 @@ class ListStoryFragment : Fragment(), MenuProvider {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-//        (requireActivity() as AppCompatActivity).also {
-//            showSystemUI(it)
-//        }.supportActionBar?.apply {
-//            setDisplayHomeAsUpEnabled(false)
-//            setDisplayShowHomeEnabled(false)
-//        }
-
         _storyAdapter = StoryAdapter(object : StoryAdapter.OnItemClicked{
             override fun onClicked(story: StoryEntity) {
                 val toDetailStory = ListStoryFragmentDirections.actionListStoryFragmentToDetailStoryFragment(story)
@@ -83,33 +72,6 @@ class ListStoryFragment : Fragment(), MenuProvider {
     private fun showLoading(isLoading : Boolean){
         binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
-//    private fun getStoryList(){
-//        viewModel?.getStoryList(0)?.observe(viewLifecycleOwner){ result ->
-//            when(result){
-//                is ResultState.Loading -> showLoading(true)
-//                is ResultState.Error ->{
-//                    showLoading(false)
-//                    Toast.makeText(
-//                        context,
-//                        result.error,
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                is ResultState.Success ->{
-//                    showLoading(false)
-//                    val stories = result.data
-//                    storyAdapter?.submitList(stories)
-//                }
-//            }
-//        }
-//
-//        binding?.rvStory?.apply {
-//            layoutManager = LinearLayoutManager(requireActivity())
-//            setHasFixedSize(true)
-//            adapter = storyAdapter
-//        }
-//    }
 
     private fun getStoryPaged(){
         viewModel?.story?.observe(viewLifecycleOwner){

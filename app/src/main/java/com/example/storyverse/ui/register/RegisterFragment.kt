@@ -10,13 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.example.storyverse.R
 import com.example.storyverse.databinding.FragmentRegisterBinding
 import com.example.storyverse.utils.ResultState
 import androidx.navigation.findNavController
-import com.example.storyverse.utils.hideSystemUI
 
 class RegisterFragment : Fragment(){
 
@@ -34,7 +32,6 @@ class RegisterFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        hideSystemUI(requireActivity() as AppCompatActivity)
         playAnimation()
         setupView()
     }
