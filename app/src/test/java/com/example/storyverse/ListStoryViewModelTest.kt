@@ -76,12 +76,12 @@ class ListStoryViewModelTest{
         //Memastikan jumlah data sesuai yang diharapkan
         assertEquals(dummyStory.size, differ.snapshot().size)
         //Memastikan data pertama yang dikembalikan sesuai
-        assertEquals(dummyStory[0].description, differ.snapshot()[0]?.description)
+        assertEquals(dummyStory[0], differ.snapshot()[0])
 
         actualStory.observeForTesting {
             assertNotNull(actualStory)
             assertEquals(dummyStory.size, (actualStory.value as ResultState.Success).data.size)
-            assertEquals(dummyStory[0].description, (actualStory.value as ResultState.Success).data[0].description)
+            assertEquals(dummyStory[0], (actualStory.value as ResultState.Success).data[0])
         }
     }
 
