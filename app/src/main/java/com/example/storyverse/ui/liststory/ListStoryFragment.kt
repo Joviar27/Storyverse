@@ -59,6 +59,8 @@ class ListStoryFragment : Fragment(), MenuProvider {
         })
 
         getStoryPaged()
+
+        binding?.rvStory?.scrollToPosition(0)
     }
 
     private fun obtainViewModel() {
@@ -86,7 +88,6 @@ class ListStoryFragment : Fragment(), MenuProvider {
                     storyAdapter?.retry()
                 }
             )
-            scrollToPosition(0)
         }
     }
 
