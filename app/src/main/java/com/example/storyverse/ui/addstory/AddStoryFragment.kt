@@ -202,6 +202,9 @@ class AddStoryFragment : Fragment(), MenuProvider {
                 getMyLastLocation()
                 buttonView.isChecked = switchState
             }
+            else{
+                latLng = null
+            }
         }
     }
 
