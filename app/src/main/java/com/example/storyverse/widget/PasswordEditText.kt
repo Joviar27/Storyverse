@@ -40,13 +40,19 @@ class PasswordEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s.toString().isEmpty() || s.toString().count() < 8){
-                    isError = true
-                    error = resources.getString(R.string.pass_error)
-                }
-                else{
-                    isError = false
-                    error = null
+                when{
+                    s.toString().isEmpty() -> {
+                        isError = true
+                        error = resources.getString(R.string.pass_empty)
+                    }
+                    s.toString().count()<8 -> {
+                        isError = true
+                        error = resources.getString(R.string.pass_error)
+                    }
+                    else -> {
+                        isError = false
+                        error = null
+                    }
                 }
             }
 

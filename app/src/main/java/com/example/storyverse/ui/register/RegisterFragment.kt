@@ -2,9 +2,7 @@ package com.example.storyverse.ui.register
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +18,15 @@ class RegisterFragment : Fragment(){
 
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding
+
+    private var _viewModel: RegisterViewModel? = null
+    private val viewModel get() = _viewModel
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        obtainViewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +48,14 @@ class RegisterFragment : Fragment(){
             val name = binding?.edRegisterName?.text.toString()
             val email = binding?.edRegisterEmail?.text.toString()
             val password = binding?.edRegisterPassword?.text.toString()
-            Log.d(TAG, "In registerFragment name : $name, email : $email, pass : $password")
-            registerUser(name, email, password)
+            when{
+                name.isEmpty() -> binding?.edRegisterName?.error = resources.getString(R.string.name_empty)
+                email.isEmpty() -> binding?.edRegisterEmail?.error = resources.getString(R.string.email_empty)
+                password.isEmpty() -> binding?.edRegisterPassword?.error = resources.getString(R.string.pass_empty)
+                binding?.edRegisterEmail?.error==null && binding?.edRegisterPassword?.error==null-> {
+                    registerUser(name, email, password)
+                }
+            }
         }
 
         binding?.tvSignIn?.setOnClickListener{
@@ -51,12 +64,12 @@ class RegisterFragment : Fragment(){
         }
     }
 
-    private fun obtainViewModel() : RegisterViewModel{
+    private fun obtainViewModel() {
         val factory : RegisterViewModelFactory = RegisterViewModelFactory.getInstance(requireActivity())
         val viewModel : RegisterViewModel by viewModels {
             factory
         }
-        return viewModel
+        _viewModel = viewModel
     }
 
     private fun showLoading(isLoading : Boolean){
@@ -89,40 +102,32 @@ class RegisterFragment : Fragment(){
     }
 
     private fun registerUser(name: String, email: String, password: String) {
-        val viewModel = obtainViewModel()
-        when {
-            name.isEmpty() -> binding?.edRegisterName?.error = resources.getString(R.string.name_empty)
-            email.isEmpty() -> binding?.edRegisterEmail?.error = resources.getString(R.string.email_empty)
-            password.isEmpty() -> binding?.edRegisterPassword?.error = resources.getString(R.string.pass_empty)
-            else -> {
-                viewModel.register(name, email, password).observe(viewLifecycleOwner) { result ->
-                    when (result) {
-                        is ResultState.Loading -> showLoading(true)
-                        is ResultState.Error -> {
-                            showLoading(false)
-                            var error = result.error
-                            when(error){
-                                "HTTP 400 Bad Request" ->{
-                                    error = resources.getString(R.string.check_format)
-                                }
-                            }
-                            Toast.makeText(
-                                context,
-                                resources.getString(R.string.failed_to_register, error),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        is ResultState.Success -> {
-                            Toast.makeText(
-                                context,
-                                resources.getString(R.string.register_success),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val toLogin = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
-                            view?.findNavController()?.navigate(toLogin)
-                            showLoading(false)
+        viewModel?.register(name, email, password)?.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ResultState.Loading -> showLoading(true)
+                is ResultState.Error -> {
+                    showLoading(false)
+                    var error = result.error
+                    when(error){
+                        "HTTP 400 Bad Request" ->{
+                            error = resources.getString(R.string.check_format)
                         }
                     }
+                    Toast.makeText(
+                        context,
+                        resources.getString(R.string.failed_to_register, error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is ResultState.Success -> {
+                    Toast.makeText(
+                        context,
+                        resources.getString(R.string.register_success),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    val toLogin = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+                    view?.findNavController()?.navigate(toLogin)
+                    showLoading(false)
                 }
             }
         }

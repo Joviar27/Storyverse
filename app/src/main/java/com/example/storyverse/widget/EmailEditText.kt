@@ -41,7 +41,10 @@ class EmailEditText : AppCompatEditText {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //nothing
+                if(s.toString().isEmpty()){
+                    isError = true
+                    error = resources.getString(R.string.email_empty)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
