@@ -32,8 +32,7 @@
 
         <activity
             android:name=".ui.map.MapStoryActivity"
-            android:exported="false"
-            android:label="@string/title_activity_map_story" />
+            android:exported="false"/>
         <activity
             android:name=".ui.camera.CameraActivity"
             android:exported="false">
