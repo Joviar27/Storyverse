@@ -5,6 +5,8 @@ This application was created for the Dicoding Intermediate Android course. It en
 - Kotlin programming language
 - Authentication with session token
 - Custom view and animation
+- Recyclerview to manipulate image
+- Jetpack navigation component
 - CameraX for camera functionality
 - Clean Architecture with UseCase, ViewModel, LiveData, and Coroutines
 - Paging with Remote Mediator to show list in RecyclerView
